@@ -1,0 +1,33 @@
+package frc.inputs;
+
+import edu.wpi.first.wpilibj.Joystick;
+import frc.utils.Constants;
+import frc.utils.DriveHelper;
+import frc.utils.DriveSignal;
+
+/**
+ * An implementation of the Driver's controls when the robot is being driven
+ * with a joystick.
+ */
+public class DriverJoystick implements DriverHid {
+
+    private final Joystick driverJoystick;
+
+    private static DriverJoystick instance;
+
+    private DriverJoystick() {
+        driverJoystick = new Joystick(Constants.DRIVER_JOYSTICK_PORT);
+    }
+
+    public static DriverJoystick getInstance() {
+        if (instance == null) {
+            instance = new DriverJoystick();
+        }
+        return instance;
+    }
+
+    @Override
+    public DriveSignal getDriveSignal() {
+        return DriveHelper.arcadeToDriveSignal(driverJoystick.getRawAxis(0), -driverJoystick.getRawAxis(1));
+    }
+}
