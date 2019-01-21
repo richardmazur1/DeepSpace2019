@@ -64,8 +64,6 @@ public class Cargo extends Subsystem {
     @Override
     public void registerEnabledLoops(LooperInterface enabledLooper) {
         Loop loop = new Loop() {
-
-
             @Override
             public void onStart(double timestamp) {
                 desiredState = CargoState.IntakeState.STOPPED;
@@ -73,12 +71,10 @@ public class Cargo extends Subsystem {
 
             @Override
             public void onLoop(double timestamp) {
-
                 synchronized (Cargo.this) {
                     CargoState newState = cargoStateMachine.onUpdate(getCargoState());
                     updateOutputFromState(newState);
                 }
-
             }
 
             @Override
