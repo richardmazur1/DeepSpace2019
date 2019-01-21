@@ -5,6 +5,11 @@ public class Constants {
 
     }
 
+    //
+    private static final double ELEVATOR_RATIO = 9;
+    private static final double INTAKE_RATIO = 300;
+
+
     // Motor controller ports
     public static final int LEFT_DRIVE_1 = 0; // SRX
     public static final int LEFT_DRIVE_2 = 1; // SPX
