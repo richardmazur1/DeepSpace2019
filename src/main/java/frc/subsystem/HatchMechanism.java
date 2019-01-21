@@ -9,11 +9,9 @@ import frc.utils.Constants;
 public class HatchMechanism extends Subsystem{
     private static HatchMechanism instance;
     private final WPI_TalonSRX hatch;
-    private final WPI_TalonSRX intake;
 
     private HatchMechanism(){
         hatch = new WPI_TalonSRX(Constants.HATCH);
-        intake = new WPI_TalonSRX(Constants.INTAKE);
     }
 
     public static HatchMechanism getInstance(){
@@ -27,11 +25,11 @@ public class HatchMechanism extends Subsystem{
     public void outputTelemetry() {
         // TODO(Raina)
 
+
     }
 
     @Override
     public void stop() {
         hatch.stopMotor();
-        intake.stopMotor();
     }
 }

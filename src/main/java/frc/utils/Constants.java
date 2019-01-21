@@ -16,6 +16,7 @@ public class Constants {
     public static final int RIGHT_DRIVE_1 = 12; // SRX
     public static final int RIGHT_DRIVE_2 = 3; // SPX
     public static final int HATCH = 2; // SRX
+    // Intakes Cargo, both
     public static final int INTAKE = 14; // SRX
     public static final int FRONT_JACK_LIFT = 11; // SRX
     public static final int RIGHT_REAR_JACK_LIFT = 7; // SRX
