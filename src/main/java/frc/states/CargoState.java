@@ -8,8 +8,11 @@ public class CargoState {
         STOPPED
     }
 
-    public boolean ballInHold = false;
+    // inputs
     public IntakeState intakeState = IntakeState.STOPPED;
+    public boolean ballInHold = false;
+
+    // outputs
     public double rearMotor;
     public double leftMotor;
     public double rightMotor;

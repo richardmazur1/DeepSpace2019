@@ -29,8 +29,8 @@ public class Cargo extends Subsystem {
         leftFront = new WPI_TalonSRX(Constants.CARGO_LEFT);
         rightFront = new WPI_TalonSRX(Constants.CARGO_RIGHT);
         // TODO make sure that the motors run the way that we expect, should be: +1 on
-        // left/right is intake and output, and +1 on rear moves it to the right when
-        // viewed from the back
+        //  left/right is intake and output, and +1 on rear moves it to the right when
+        //  viewed from the back
         rightFront.setInverted(true);
     }
 

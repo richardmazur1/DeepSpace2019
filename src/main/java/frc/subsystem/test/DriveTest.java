@@ -1,21 +1,17 @@
 package frc.subsystem.test;
 
-import frc.loops.Looper;
-import frc.subsystem.Drive;
-import frc.subsystem.SubsystemManager;
+import frc.subsystem.DriveVictorSP;
 import frc.utils.DriveSignal;
-import java.util.Arrays;
 
 import static frc.utils.Constants.DRIVE_SHUFFLEBOARD;
 
 public class DriveTest implements SubsystemTest {
-    private static final double BREAK_PERIOD = 0.15;
-    private Looper enabledLooper = new Looper();
-    private Looper disabledLooper = new Looper();
-    private Drive drive = Drive.getInstance();
+    private static final double BREAK_PERIOD = 0.30;
+    private DriveVictorSP drive = DriveVictorSP.getInstance();
     private DriveTestState state = DriveTestState.INIT_DISABLED;
     private double goalTimestamp = 0.0;
     private boolean initializedState = false;
+    private static final double SPEED = 0.4;
 
     private enum DriveTestState {
         INIT_DISABLED("The robot should not move before setup", 1.0),
@@ -48,18 +44,18 @@ public class DriveTest implements SubsystemTest {
     }
 
     private void handleLoop(double timestamp, DriveTestState nextState) {
-        if (goalTimestamp <= timestamp) {
-            neutralizeDriveTrain();
+        if (!initializedState) {
+            goalTimestamp = this.state.timeToRun + timestamp;
+            initializedState = true;
         }
-        if (goalTimestamp <= timestamp + BREAK_PERIOD) {
+
+        if (goalTimestamp + BREAK_PERIOD <= timestamp) {
             initializedState = false;
             state = nextState;
+        } else if (goalTimestamp <= timestamp) {
+            neutralizeDriveTrain();
         }
     }
-
-    private SubsystemManager subsystemManager = new SubsystemManager(
-            Arrays.asList(Drive.getInstance())
-    );
 
     public DriveTest() {
         drive.setOpenLoop(DriveSignal.NEUTRAL);
@@ -68,46 +64,35 @@ public class DriveTest implements SubsystemTest {
     private void outputTelemetry() {
         DRIVE_SHUFFLEBOARD.putString("Test State", state.toString());
         DRIVE_SHUFFLEBOARD.putString("Test State Expected", state.getInformation());
+        drive.outputTelemetry();
     }
 
     public void periodic(double timestamp) {
         switch (state) {
             case INIT_DISABLED:
-                if (!initializedState) {
-                    goalTimestamp = this.state.timeToRun + timestamp;
-                    subsystemManager.registerDisabledLoop(enabledLooper);
-                    subsystemManager.registerDisabledLoop(disabledLooper);
-                    disabledLooper.start();
-                    enabledLooper.stop();
-                    initializedState = true;
-                }
                 handleLoop(timestamp, DriveTestState.DRIVE_FORWARD);
                 break;
             case DRIVE_FORWARD:
-                if (!initializedState) {
-                    disabledLooper.stop();
-                    enabledLooper.start();
-                }
-                drive.setOpenLoop(new DriveSignal(1.0, 1.0));
+                drive.setOpenLoop(new DriveSignal(SPEED, SPEED));
                 handleLoop(timestamp, DriveTestState.TURN_RIGHT);
                 break;
             case TURN_RIGHT:
-                drive.setOpenLoop(new DriveSignal(1.0, -1.0));
+                drive.setOpenLoop(new DriveSignal(SPEED, -SPEED));
                 handleLoop(timestamp, DriveTestState.TURN_LEFT);
                 break;
             case TURN_LEFT:
-                drive.setOpenLoop(new DriveSignal(-1.0, 1.0));
+                drive.setOpenLoop(new DriveSignal(-SPEED, SPEED));
                 handleLoop(timestamp, DriveTestState.DRIVE_REVERSE);
                 break;
             case DRIVE_REVERSE:
-                drive.setOpenLoop(new DriveSignal(-1.0, -1.0));
+                drive.setOpenLoop(new DriveSignal(-SPEED, -SPEED));
                 handleLoop(timestamp, DriveTestState.END_DISABLED);
                 break;
             case END_DISABLED:
-                subsystemManager.stop();
+                neutralizeDriveTrain();
                 break;
         }
+        drive.writePeriodicOutputs();
         outputTelemetry();
-        subsystemManager.stop();
     }
 }

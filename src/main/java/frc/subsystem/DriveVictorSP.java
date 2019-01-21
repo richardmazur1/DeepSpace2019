@@ -81,8 +81,8 @@ public class DriveVictorSP extends Subsystem {
         // TODO(Lucas) check inversion
         // TODO(Lucas) evaluate accuracy differences between velocity timings
         leftMotor = new VictorSP(0);
-        leftMotor.setInverted(true);
         rightMotor = new VictorSP(1);
+        rightMotor.setInverted(true);
     }
 
     public static DriveVictorSP getInstance() {

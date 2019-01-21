@@ -28,6 +28,6 @@ public class DriverJoystick implements DriverHid {
 
     @Override
     public DriveSignal getDriveSignal() {
-        return DriveHelper.arcadeToDriveSignal(driverJoystick.getRawAxis(0), -driverJoystick.getRawAxis(1));
+        return DriveHelper.arcadeToDriveSignal(-driverJoystick.getRawAxis(1), driverJoystick.getRawAxis(0));
     }
 }

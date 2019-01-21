@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.loops.Looper;
-import frc.subsystem.Drive;
-import frc.subsystem.SubsystemManager;
+import frc.subsystem.*;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -18,7 +18,7 @@ public class TestRobot extends TimedRobot {
     // TODO should we add manual tests?
     public enum Test {
         DEFAULT_TEST("None"),
-        GAMEPAD_TEST("Drive Automated Test"),
+        GAMEPAD_TEST("Gamepad Automated Test"),
         DRIVE_TEST("Drive Automated Test"),
         //        DRIVE_MANUAL_CONTROL_TEST("Drive Manual Test"),
         CARGO_TEST("Cargo Automated Test"),
@@ -47,13 +47,18 @@ public class TestRobot extends TimedRobot {
     private Looper enabledLooper = new Looper();
     private Looper disabledLooper = new Looper();
     private final SubsystemManager subsystemManager = new SubsystemManager(Arrays.asList(
-            Drive.getInstance()
+            DriveVictorSP.getInstance()
+//            Cargo.getInstance(),
+//            ElevatorVictorSP.getInstance(),
+//            HatchMechanism.getInstance(),
+//            Jacks.getInstance()
     ));
 
     private LinkedHashMap<String, Test> tests = new LinkedHashMap<>();
 
     @Override
     public void robotInit() {
+        SmartDashboard.putString("Robot Init", "Running");
         tests.put(Test.DEFAULT_TEST.getOption(), Test.DEFAULT_TEST);
         for (Test test : Test.values()) {
             if (test != Test.DEFAULT_TEST) {
@@ -64,6 +69,8 @@ public class TestRobot extends TimedRobot {
         for (String s : tests.keySet()) {
             chooser.addOption(s, s);
         }
+        SmartDashboard.putData("Test choices", chooser);
+
 
         subsystemManager.registerEnabledLoops(enabledLooper);
         subsystemManager.registerDisabledLoop(disabledLooper);
@@ -105,15 +112,15 @@ public class TestRobot extends TimedRobot {
     // TODO automate test validation
     @Override
     public void testInit() {
-        Test testSelcted = tests.get(chooser.getSelected());
+        Test testSelected = tests.get(chooser.getSelected());
         disabledLooper.stop();
-        enabledLooper.stop();
-        switch (testSelcted) {
+        enabledLooper.start();
+        switch (testSelected) {
             case DEFAULT_TEST:
                 subsystemTest = null;
                 break;
             case GAMEPAD_TEST:
-                XboxController xboxController = new XboxController(1);
+                subsystemTest = new GamepadTest();
                 break;
             case DRIVE_TEST:
                 subsystemTest = new DriveTest();
@@ -133,28 +140,14 @@ public class TestRobot extends TimedRobot {
         }
     }
 
-    private double previousTimestamp = Timer.getFPGATimestamp();
-
-    private static final String TEST_INFORMATION_PREFIX = "Test Information";
-    private SubsystemManager testSubsystemManager;
-    private Test lastTest;
     private SubsystemTest subsystemTest;
 
     @Override
     public void testPeriodic() {
-
+        subsystemTest.periodic(Timer.getFPGATimestamp());
     }
 
     public void outputTelemetry() {
         enabledLooper.outputTelemetry();
     }
-
-    private void driveTestInit(){
-
-    }
-
-    private void driveTestPeriodic(){
-
-    }
-
 }

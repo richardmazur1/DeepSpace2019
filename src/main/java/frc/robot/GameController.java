@@ -4,6 +4,8 @@ import frc.inputs.*;
 import frc.utils.Constants;
 import frc.utils.DriveSignal;
 
+import static frc.utils.Constants.ROBOT_MAIN_SHUFFLEBOARD;
+
 public class GameController implements GameHid {
     private static GameController instance;
     private final DriverHid driverHid;
@@ -68,6 +70,18 @@ public class GameController implements GameHid {
     @Override
     public boolean basicSynchronousLift() {
         return operatorHid.basicSynchronousLift();
+    }
+
+    public void outputTelemetry(){
+        ROBOT_MAIN_SHUFFLEBOARD.putBoolean("Cargo Intake", this.cargoIntake());
+        ROBOT_MAIN_SHUFFLEBOARD.putBoolean("Cargo Outtake Front", this.cargoOuttakeFront());
+        ROBOT_MAIN_SHUFFLEBOARD.putBoolean("Cargo Outtake Left", this.cargoOuttakeLeft());
+        ROBOT_MAIN_SHUFFLEBOARD.putBoolean("Cargo Outtake Right", this.cargoOuttakeRight());
+        ROBOT_MAIN_SHUFFLEBOARD.putBoolean("Retract Front Jacks", this.retractFrontJack());
+        ROBOT_MAIN_SHUFFLEBOARD.putBoolean("Lift All Jacks", this.liftAllJacks());
+        ROBOT_MAIN_SHUFFLEBOARD.putNumber("Drive Signal Left", this.getDriveSignal().getLeftOutput());
+        ROBOT_MAIN_SHUFFLEBOARD.putNumber("Drive Signal Right", this.getDriveSignal().getRightOutput());
+        ROBOT_MAIN_SHUFFLEBOARD.putBoolean("Basic Syncrhonous Lift", this.basicSynchronousLift());
     }
 
 }

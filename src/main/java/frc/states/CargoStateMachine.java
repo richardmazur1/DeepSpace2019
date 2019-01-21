@@ -39,7 +39,6 @@ public class CargoStateMachine {
 
     public void handleSystemStateUpdate() {
         switch (systemState.intakeState) {
-
             case INTAKE:
                 systemState.rearMotor = 0.0;
                 systemState.leftMotor = DEFAULT_INTAKE_POWER;
@@ -47,13 +46,13 @@ public class CargoStateMachine {
                 break;
             case OUTTAKE_LEFT:
                 systemState.rearMotor = -DEFAULT_OUTTAKE_POWER;
-                systemState.leftMotor = DEFAULT_INTAKE_POWER;
-                systemState.rightMotor = -DEFAULT_INTAKE_POWER;
+                systemState.leftMotor = DEFAULT_OUTTAKE_POWER;
+                systemState.rightMotor = -DEFAULT_OUTTAKE_POWER;
                 break;
             case OUTTAKE_RIGHT:
                 systemState.rearMotor = DEFAULT_OUTTAKE_POWER;
-                systemState.leftMotor = -DEFAULT_INTAKE_POWER;
-                systemState.rightMotor = DEFAULT_INTAKE_POWER;
+                systemState.leftMotor = -DEFAULT_OUTTAKE_POWER;
+                systemState.rightMotor = DEFAULT_OUTTAKE_POWER;
                 break;
             case STOPPED:
                 systemState.rearMotor = 0;
