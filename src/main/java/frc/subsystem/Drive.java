@@ -122,6 +122,7 @@ public class Drive extends Subsystem {
         // TODO add state
         DRIVE_SHUFFLEBOARD.putNumber("Left Demand", periodicIo.leftDemand);
         DRIVE_SHUFFLEBOARD.putNumber("Right Demand", periodicIo.rightDemand);
+        DRIVE_SHUFFLEBOARD.putString("Drive State", state.toString());
     }
 
     @Override

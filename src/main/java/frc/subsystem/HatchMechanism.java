@@ -26,6 +26,7 @@ public class HatchMechanism extends Subsystem{
     @Override
     public void outputTelemetry() {
         // TODO(Raina)
+
     }
 
     @Override
