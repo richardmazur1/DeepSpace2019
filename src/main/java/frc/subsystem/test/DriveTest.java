@@ -36,8 +36,12 @@ public class DriveTest implements SubsystemTest {
         public double getTimeToRun() {
             return timeToRun;
         }
-    }
 
+
+    }
+    public DriveTest() {
+        drive.setOpenLoop(DriveSignal.NEUTRAL);
+    }
 
     private void neutralizeDriveTrain() {
         drive.setOpenLoop(DriveSignal.NEUTRAL);
@@ -45,7 +49,7 @@ public class DriveTest implements SubsystemTest {
 
     private void handleLoop(double timestamp, DriveTestState nextState) {
         if (!initializedState) {
-            goalTimestamp = this.state.timeToRun + timestamp;
+            goalTimestamp = this.state.getTimeToRun() + timestamp;
             initializedState = true;
         }
 
@@ -55,10 +59,6 @@ public class DriveTest implements SubsystemTest {
         } else if (goalTimestamp <= timestamp) {
             neutralizeDriveTrain();
         }
-    }
-
-    public DriveTest() {
-        drive.setOpenLoop(DriveSignal.NEUTRAL);
     }
 
     private void outputTelemetry() {

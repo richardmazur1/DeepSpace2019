@@ -5,24 +5,25 @@ public class Constants {
 
     }
 
-    //
+    // TODO do we need these
     private static final double ELEVATOR_RATIO = 9;
     private static final double INTAKE_RATIO = 300;
 
 
     // Motor controller ports
-    public static final int LEFT_DRIVE_1 = 0; // SRX
-    public static final int LEFT_DRIVE_2 = 1; // SPX
-    public static final int RIGHT_DRIVE_1 = 12; // SRX
+    public static final int LEFT_DRIVE_1 = 15; // SRX
+    public static final int LEFT_DRIVE_2 = 0; // SPX
+    public static final int RIGHT_DRIVE_1 = 2; // SRX
     public static final int RIGHT_DRIVE_2 = 3; // SPX
-    public static final int HATCH = 2; // SRX
-    public static final int INTAKE = 14; // SRX
+    public static final int HATCH = 12; // SRX
+    // Intakes Cargo, both
+    public static final int INTAKE = 1; // SRX
     public static final int FRONT_JACK_LIFT = 11; // SRX
     public static final int RIGHT_REAR_JACK_LIFT = 7; // SRX
     public static final int LEFT_REAR_JACK_LIFT = 4; // SRX
     public static final int RIGHT_REAR_JACK_WHEEL = 6; // SRX
     public static final int LEFT_REAR_JACK_WHEEL = 5; // SRX
-    public static final int LEFT_LIFT_NEO = 15; // MAX
+    public static final int LEFT_LIFT_NEO = 14; // MAX
     public static final int RIGHT_LIFT_NEO = 13; // MAX
     public static final int CARGO_CENTER = 10; // SRX
     public static final int CARGO_LEFT = 9; // SRX

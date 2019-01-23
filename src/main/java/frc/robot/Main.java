@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.subsystem.test.NeoTestRobot;
 import frc.subsystem.test.TestRobot;
 
 /**
@@ -25,6 +26,6 @@ public final class Main {
    * <p>If you change your main robot class, change the parameter type.
    */
   public static void main(String... args) {
-    RobotBase.startRobot(TestRobot::new);
+    RobotBase.startRobot(NeoTestRobot::new);
   }
 }

@@ -119,7 +119,7 @@ public class Drive extends Subsystem {
 
     @Override
     public void outputTelemetry() {
-        // TODO add state
+        DRIVE_SHUFFLEBOARD.putString("Drive State", state.toString());
         DRIVE_SHUFFLEBOARD.putNumber("Left Demand", periodicIo.leftDemand);
         DRIVE_SHUFFLEBOARD.putNumber("Right Demand", periodicIo.rightDemand);
     }

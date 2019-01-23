@@ -16,4 +16,5 @@ public class CargoState {
     public double rearMotor;
     public double leftMotor;
     public double rightMotor;
+    public double intake;
 }
